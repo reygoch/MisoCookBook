@@ -8,6 +8,10 @@ constraints:
   , squeal-postgresql ^>= 0.4
   , postgresql-binary ^>= 0.12
 
+  , warp              ^>= 3.2.26
+  , servant           ^>= 0.15
+  , servant-server    ^>= 0.15
+
 source-repository-package
   type     : git
   location : https://github.com/reygoch/squeal.git
