@@ -3,6 +3,8 @@ packages: */*.cabal
 constraints:
     base              ^>= 4.11
   , text              ^>= 1.2
+  , yaml              ^>= 0.11
+  , aeson             ^>= 1.4.2
   , bytestring        ^>= 0.10
   , generics-sop      ^>= 0.4.0.1
   , squeal-postgresql ^>= 0.4
