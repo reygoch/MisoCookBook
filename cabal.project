@@ -4,7 +4,7 @@ constraints:
     base                  ^>= 4.11
   , text                  ^>= 1.2
   , yaml                  ^>= 0.11
-  , aeson                 ^>= 1.4.2
+  , aeson                 ^>= 1.4
   , bytestring            ^>= 0.10
   , bytestring-conversion ^>= 0.3.1
   , bcrypt                ^>= 0.0.11
@@ -12,14 +12,15 @@ constraints:
   , squeal-postgresql     ^>= 0.4
   , postgresql-binary     ^>= 0.12
 
-  , freer-simple          ^>= 1.2.1
+  , freer-simple          ^>= 1.2
   , transformers          ^>= 0.5.6.2
   , transformers-base     ^>= 0.4.5.2
-  , monad-control         ^>= 1.0.2.3
+  , monad-control         ^>= 1.0
 
-  , warp                  ^>= 3.2.26
+  , warp                  ^>= 3.2
   , servant               ^>= 0.15
   , servant-server        ^>= 0.15
+  , servant-auth-server   ^>= 0.4
 
   , foreign-store         ^>= 0.2
 

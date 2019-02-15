@@ -18,7 +18,7 @@ createUser = insertRow #_User
   :* Set ( param @2 ) `as` #password
   )
   OnConflictDoRaise
-  ( Returning $ #id :* #username :* #password )
+  ReturningStar
 
 selectUserByUsername :: Query Schema '[ 'NotNull 'PGtext ] ( RowPG User )
 selectUserByUsername
@@ -38,7 +38,7 @@ createIngredient = insertRow #_Ingredient
   :* Set ( param @5 ) `as` #unit
   )
   OnConflictDoRaise
-  ( Returning $ #id :* #name :* #image :* #description :* #cost :* #unit )
+  ReturningStar
 
 selectIngredientById :: Query Schema ( TuplePG ( ID Ingredient ) ) ( RowPG Ingredient )
 selectIngredientById
@@ -75,7 +75,7 @@ createRecipe = insertRow #_Recipe
   :* Set ( param @4 ) `as` #description
   )
   OnConflictDoRaise
-  ( Returning $ #id :* #userId :* #name :* #image :* #description )
+  ReturningStar
 
 createRecipeIngredient :: Manipulation Schema ( TuplePG NewRecipeIngredient ) ( RowPG RecipeIngredient )
 createRecipeIngredient = insertRow #_RecipeIngredient
@@ -85,7 +85,7 @@ createRecipeIngredient = insertRow #_RecipeIngredient
   :* Set ( param @3 ) `as` #amount
   )
   OnConflictDoRaise
-  ( Returning $ #id :* #recipeId :* #ingredientId :* #amount )
+  ReturningStar
 
 createRecipeInstruction :: Manipulation Schema ( TuplePG NewRecipeInstruction ) ( RowPG RecipeInstruction )
 createRecipeInstruction = insertRow #_RecipeInstruction
@@ -95,13 +95,13 @@ createRecipeInstruction = insertRow #_RecipeInstruction
   :* Set ( param @3 ) `as` #instruction
   )
   OnConflictDoRaise
-  ( Returning $ #id :* #recipeId :* #ordering :* #instruction )
+  ReturningStar
 
 createUserRecipe :: Manipulation Schema ( TuplePG NewUserRecipe ) ( RowPG UserRecipe )
 createUserRecipe = insertRow #_UserRecipe
-  (  Default `as` #id
+  (  Default          `as` #id
   :* Set ( param @1 ) `as` #userId
   :* Set ( param @2 ) `as` #recipeId
   )
   OnConflictDoRaise
-  ( Returning $ #id :* #userId :* #recipeId )
+  ReturningStar

@@ -16,10 +16,10 @@ AppServer:
 DataLayer:
 	ghcid -c "cabal new-repl DataLayer"   \
   --restart=.\\cabal.project             \
-  --restart=.\\DataLayer\\DataLayer.cabal
+  --restart=.\\DataLayer\\DataLayer.cabal \
 
-RunDevServer:
+DevServer:
 	ghcid -c "cabal new-repl AppServer"   \
   --restart=.\\cabal.project             \
   --restart=.\\AppServer\\AppServer.cabal \
-  -T Cookster.DevServer.start
+  -T Cookster.DevServer.start              \

@@ -9,6 +9,7 @@ common deps
                     , warp
                     , servant
                     , servant-server
+                    , servant-auth-server
                     , foreign-store
                     , settings
                     , datalayer

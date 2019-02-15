@@ -71,7 +71,7 @@ data Pagination = Pagination
 --
 
 newtype Cost = Cost
-  { unID :: Word32
+  { unCost :: Word32
   } deriving
     ( Eq, Show
     , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
