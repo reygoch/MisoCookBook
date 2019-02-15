@@ -40,6 +40,7 @@ data Database = Database
   , host     :: Text -- ^ name of the database host
   , name     :: Text -- ^ name of the database
   , timeout  :: Word -- ^ how long the unused connection is kept open
+  , stripes  :: Word -- ^ number of stripes / sub pools
   , poolsize :: Word -- ^ how many connections are in the connection pool
   , username :: Text -- ^ username for the database user
   , password :: Text -- ^ password for the database user

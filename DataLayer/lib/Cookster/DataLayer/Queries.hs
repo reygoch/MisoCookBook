@@ -6,7 +6,7 @@
 module Cookster.DataLayer.Queries where
 --
 import Squeal.PostgreSQL
-import Cookster.DataLayer.Schema ( Schema )
+import Cookster.DataLayer.Schema         ( Schema )
 import Cookster.DataLayer.Model
 import Cookster.DataLayer.Model.Password ( Hash (..) )
 --
