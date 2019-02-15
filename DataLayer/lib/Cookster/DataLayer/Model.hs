@@ -13,6 +13,7 @@ module Cookster.DataLayer.Model where
 --
 import           Data.Text                         ( Text )
 import           Data.Word                         ( Word32, Word64 )
+import           Data.Aeson                        ( ToJSON, FromJSON )
 import qualified GHC.Generics               as GHC ( Generic )
 import qualified Generics.SOP               as SOP ( Generic, HasDatatypeInfo )
 import           Generics.SOP.BasicFunctors        ( K (..) )
@@ -21,7 +22,7 @@ import           Cookster.DataLayer.Model.Password ( Hash (..), Password )
 --
 
 data Unit = L | Kg | Pce
-  deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo )
+  deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo, ToJSON, FromJSON )
 
 type PGUnit = 'PGenum '[ "L", "Kg", "Pce" ]
 
@@ -35,7 +36,10 @@ instance FromValue PGUnit Unit               where fromValue = getEnumerated <$>
 
 newtype Image = Image
   { unImage :: Text
-  } deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo )
+  } deriving
+    ( Eq, Show
+    , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
+    , ToJSON, FromJSON )
 
 type instance PG Image = PGtext
 
@@ -44,20 +48,29 @@ type instance PG Image = PGtext
 data Credentials ( h :: Hash ) = Credentials
   { username :: Text
   , password :: Password h
-  } deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo )
+  } deriving
+    ( Eq, Show
+    , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
+    , ToJSON, FromJSON )
 
 --
 
 data Pagination = Pagination
   { items :: Word64 -- ^ items per page
   , pagen :: Word64 -- ^ page number
-  } deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo )
+  } deriving
+    ( Eq, Show
+    , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
+    , ToJSON, FromJSON )
 
 --
 
 newtype ID a = ID
   { unID :: Word32
-  } deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo )
+  } deriving
+    ( Eq, Show
+    , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
+    , ToJSON, FromJSON )
 
 type instance PG ( ID a ) = PGint4
 
@@ -66,7 +79,10 @@ type instance PG ( ID a ) = PGint4
 data Entity e = Entity
   { entityId :: ID e
   , entity   :: e
-  } deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo )
+  } deriving
+    ( Eq, Show
+    , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
+    , ToJSON, FromJSON )
 
 --
 
@@ -74,12 +90,18 @@ data User = User
   { id       :: ID User
   , username :: Text
   , password :: Password Hashed
-  } deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo )
+  } deriving
+    ( Eq, Show, GHC.Generic
+    , SOP.Generic, SOP.HasDatatypeInfo
+    , ToJSON, FromJSON )
 
 data User' = User'
   { username :: Text
   , password :: Password Hashed
-  } deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo )
+  } deriving
+    ( Eq, Show
+    , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
+    , ToJSON, FromJSON )
 
 --
 
@@ -90,7 +112,10 @@ data Ingredient = Ingredient
   , description :: Text
   , cost        :: Word32
   , unit        :: Unit
-  } deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo )
+  } deriving
+    ( Eq, Show
+    , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
+    , ToJSON, FromJSON )
 
 data NewIngredient = NewIngredient
   { name        :: Text
@@ -98,7 +123,10 @@ data NewIngredient = NewIngredient
   , description :: Text
   , cost        :: Word32
   , unit        :: Unit
-  } deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo )
+  } deriving
+    ( Eq, Show
+    , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
+    , ToJSON, FromJSON )
 
 --
 
@@ -108,14 +136,20 @@ data Recipe = Recipe
   , name        :: Text
   , image       :: Maybe Image
   , description :: Maybe Text
-  } deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo )
+  } deriving
+    ( Eq, Show
+    , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
+    , ToJSON, FromJSON )
 
 data NewRecipe = NewRecipe
   { userId      :: ID User
   , name        :: Text
   , image       :: Maybe Image
   , description :: Maybe Text
-  } deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo )
+  } deriving
+    ( Eq, Show
+    , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
+    , ToJSON, FromJSON )
 
 --
 
@@ -124,13 +158,19 @@ data RecipeIngredient = RecipeIngredient
   , recipeId     :: ID Recipe
   , ingredientId :: ID Ingredient
   , amount       :: Double
-  } deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo )
+  } deriving
+    ( Eq, Show
+    , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
+    , ToJSON, FromJSON )
 
 data NewRecipeIngredient = NewRecipeIngredient
   { recipeId     :: ID Recipe
   , ingredientId :: ID Ingredient
   , amount       :: Double
-  } deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo )
+  } deriving
+    ( Eq, Show
+    , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
+    , ToJSON, FromJSON )
 
 --
 
@@ -139,13 +179,19 @@ data RecipeInstruction = RecipeInstruction
   , recipeId    :: ID Recipe
   , ordering    :: Word32
   , instruction :: Text
-  } deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo )
+  } deriving
+    ( Eq, Show
+    , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
+    , ToJSON, FromJSON )
 
 data NewRecipeInstruction = NewRecipeInstruction
   { recipeId    :: ID Recipe
   , ordering    :: Word32
   , instruction :: Text
-  } deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo )
+  } deriving
+    ( Eq, Show
+    , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
+    , ToJSON, FromJSON )
 
 --
 
@@ -153,9 +199,15 @@ data UserRecipe = UserRecipe
   { id       :: ID UserRecipe
   , userId   :: ID User
   , recipeId :: ID Recipe
-  } deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo )
+  } deriving
+    ( Eq, Show
+    , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
+    , ToJSON, FromJSON )
 
 data NewUserRecipe = NewUserRecipe
   { userId   :: ID User
   , recipeId :: ID Recipe
-  } deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo )
+  } deriving
+    ( Eq, Show
+    , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
+    , ToJSON, FromJSON )

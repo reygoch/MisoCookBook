@@ -6,6 +6,7 @@ version             : 0.1.0.0
 common deps
   build-depends     : base
                     , text
+                    , aeson
                     , bytestring
                     , bcrypt
                     , generics-sop

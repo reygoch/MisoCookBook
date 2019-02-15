@@ -11,6 +11,7 @@ module Cookster.DataLayer.Model.Password where
 --
 import           Data.Text                         ( Text )
 import           Data.Text.Encoding                ( encodeUtf8, decodeUtf8 )
+import           Data.Aeson                        ( ToJSON, FromJSON )
 import qualified GHC.Generics               as GHC ( Generic )
 import qualified Generics.SOP               as SOP ( Generic, HasDatatypeInfo, K )
 import           Generics.SOP.BasicFunctors        ( K (..) )
@@ -26,7 +27,10 @@ data Hash = Plain | Hashed
 
 newtype Password ( h :: Hash ) = Password
   { unPassword :: Text
-  } deriving ( Eq, Show, GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo )
+  } deriving
+    ( Eq, Show
+    , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
+    , ToJSON, FromJSON )
 
 type instance PG ( Password 'Hashed ) = PGtext
 
