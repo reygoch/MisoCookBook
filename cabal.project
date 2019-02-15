@@ -1,2 +1,14 @@
-projects:
-  DataLayer/
+packages: */*.cabal
+
+constraints:
+    base              ^>= 4.11
+  , text              ^>= 1.2
+  , bytestring        ^>= 0.10
+  , generics-sop      ^>= 0.4.0.1
+  , squeal-postgresql ^>= 0.4
+
+source-repository-package
+  type     : git
+  location : https://github.com/reygoch/squeal.git
+  tag      : b81b1e95cdcb8bc5bdd34fe7ed08fe3ae29db1f3
+  subdir   : squeal-postgresql
