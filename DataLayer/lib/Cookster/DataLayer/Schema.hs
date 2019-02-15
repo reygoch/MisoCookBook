@@ -20,7 +20,7 @@ import Squeal.PostgreSQL
 import Cookster.DataLayer.Model ( Unit )
 --
 
-type CooksterSchema =
+type Schema =
   '[ "_Unit"       ::: 'Typedef ( PG Unit )
    , "_Ingredient" ::: 'Table
     (
@@ -127,7 +127,7 @@ type CooksterSchema =
     )
    ]
 
-schemaTeardown :: Definition CooksterSchema '[]
+schemaTeardown :: Definition Schema '[]
 schemaTeardown
   =   dropTable #_RecipeIngredient
   >>> dropTable #_Ingredient
@@ -140,7 +140,7 @@ schemaTeardown
   >>> dropTable #_Generation
   >>> dropType  #_Unit
 
-schemaCreation :: Definition '[] CooksterSchema
+schemaCreation :: Definition '[] Schema
 schemaCreation
   =   createTypeEnumFrom @Unit #_Unit
   >>> createTable #_Ingredient

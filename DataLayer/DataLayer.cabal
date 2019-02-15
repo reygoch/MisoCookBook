@@ -8,6 +8,7 @@ common deps
                     , text
                     , generics-sop
                     , squeal-postgresql
+                    , postgresql-binary
   default-language  : Haskell2010
 
 library
@@ -17,3 +18,4 @@ library
                     , Cookster.DataLayer.Model.Password
 
                     , Cookster.DataLayer.Schema
+                    , Cookster.DataLayer.Queries

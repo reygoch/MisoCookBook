@@ -6,6 +6,7 @@ constraints:
   , bytestring        ^>= 0.10
   , generics-sop      ^>= 0.4.0.1
   , squeal-postgresql ^>= 0.4
+  , postgresql-binary ^>= 0.12
 
 source-repository-package
   type     : git
