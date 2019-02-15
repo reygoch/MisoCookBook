@@ -1,23 +1,27 @@
 packages: */*.cabal
 
 constraints:
-    base              ^>= 4.11
-  , text              ^>= 1.2
-  , yaml              ^>= 0.11
-  , aeson             ^>= 1.4.2
-  , bytestring        ^>= 0.10
-  , bcrypt            ^>= 0.0.11
-  , generics-sop      ^>= 0.4.0.1
-  , squeal-postgresql ^>= 0.4
-  , postgresql-binary ^>= 0.12
-  , transformers      ^>= 0.5.6.2
-  , transformers-base ^>= 0.4.5.2
+    base                  ^>= 4.11
+  , text                  ^>= 1.2
+  , yaml                  ^>= 0.11
+  , aeson                 ^>= 1.4.2
+  , bytestring            ^>= 0.10
+  , bytestring-conversion ^>= 0.3.1
+  , bcrypt                ^>= 0.0.11
+  , generics-sop          ^>= 0.4.0.1
+  , squeal-postgresql     ^>= 0.4
+  , postgresql-binary     ^>= 0.12
 
-  , warp              ^>= 3.2.26
-  , servant           ^>= 0.15
-  , servant-server    ^>= 0.15
+  , freer-simple          ^>= 1.2.1
+  , transformers          ^>= 0.5.6.2
+  , transformers-base     ^>= 0.4.5.2
+  , monad-control         ^>= 1.0.2.3
 
-  , foreign-store     ^>= 0.2
+  , warp                  ^>= 3.2.26
+  , servant               ^>= 0.15
+  , servant-server        ^>= 0.15
+
+  , foreign-store         ^>= 0.2
 
 source-repository-package
   type     : git

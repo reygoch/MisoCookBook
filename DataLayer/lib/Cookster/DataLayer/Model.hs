@@ -12,12 +12,14 @@
 module Cookster.DataLayer.Model where
 --
 import           Data.Text                         ( Text )
+import           Data.Int                          ( Int32 )
 import           Data.Word                         ( Word32, Word64 )
 import           Data.Aeson                        ( ToJSON, FromJSON )
 import qualified GHC.Generics               as GHC ( Generic )
 import qualified Generics.SOP               as SOP ( Generic, HasDatatypeInfo )
 import           Generics.SOP.BasicFunctors        ( K (..) )
 import           Squeal.PostgreSQL
+import           Squeal.PostgreSQL.Binary          ( FromValue (..) )
 import           Cookster.DataLayer.Model.Password ( Hash (..), Password )
 --
 
@@ -43,6 +45,9 @@ newtype Image = Image
 
 type instance PG Image = PGtext
 
+instance FromValue PGtext Image where
+  fromValue = Image <$> fromValue @'PGtext
+
 --
 
 data Credentials ( h :: Hash ) = Credentials
@@ -65,6 +70,20 @@ data Pagination = Pagination
 
 --
 
+newtype Cost = Cost
+  { unID :: Word32
+  } deriving
+    ( Eq, Show
+    , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
+    , ToJSON, FromJSON )
+
+type instance PG Cost = PGint4
+
+instance FromValue PGint4 Cost where
+  fromValue = Cost . ( fromIntegral @Int32 ) <$> fromValue @'PGint4
+
+--
+
 newtype ID a = ID
   { unID :: Word32
   } deriving
@@ -73,6 +92,9 @@ newtype ID a = ID
     , ToJSON, FromJSON )
 
 type instance PG ( ID a ) = PGint4
+
+instance FromValue PGint4 ( ID a ) where
+  fromValue = ID . ( fromIntegral @Int32 ) <$> fromValue @'PGint4
 
 --
 
@@ -110,7 +132,7 @@ data Ingredient = Ingredient
   , name        :: Text
   , image       :: Image
   , description :: Text
-  , cost        :: Word32
+  , cost        :: Cost
   , unit        :: Unit
   } deriving
     ( Eq, Show

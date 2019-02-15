@@ -1,9 +1,9 @@
-{-# LANGUAGE DataKinds #-}
-{-# LANGUAGE TypeApplications #-}
-{-# LANGUAGE OverloadedLabels #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE TypeApplications      #-}
+{-# LANGUAGE OverloadedLabels      #-}
 {-# LANGUAGE DuplicateRecordFields #-}
 --
-module Cookster.DataLayer.Queries where
+module Cookster.DataLayer.Query where
 --
 import Squeal.PostgreSQL
 import Cookster.DataLayer.Schema         ( Schema )
