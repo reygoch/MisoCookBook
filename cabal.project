@@ -22,6 +22,8 @@ constraints:
   , servant-server        ^>= 0.15
   , servant-auth-server   ^>= 0.4
 
+  , jose                  ^>= 0.7
+
   , foreign-store         ^>= 0.2
 
 source-repository-package

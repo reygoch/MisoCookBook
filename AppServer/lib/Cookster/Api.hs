@@ -1,17 +1,36 @@
 {-# LANGUAGE DataKinds         #-}
+{-# LANGUAGE TypeOperators     #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE KindSignatures    #-}
 {-# LANGUAGE OverloadedStrings #-}
 --
 module Cookster.Api where
 --
-import Servant
-import Cookster.DataLayer.Model
+import Servant                  ( Server, Get, JSON, PlainText, (:>), (:<|>) (..) )
+import Servant.API.Generic      ( ToServantApi, (:-) )
+import Servant.Auth.Server      ( Cookie, JWT, Auth )
+import Data.Text                ( Text )
+import Data.Proxy               ( Proxy (..) )
+import GHC.Generics             ( Generic )
+import Cookster.App             ( AsAppM )
+import Cookster.DataLayer.Model ( ID (..), Image (..), Cost (..), Unit (..), Ingredient (..) )
+import Cookster.DataLayer.Repository.IngredientRepo ( selectAllIngredients' )
 --
 
-type IngredientAPI
-  = Get '[ JSON ] [ Ingredient ]
+type AuthMethods = '[ Cookie, JWT ]
 
-ingredientAPI :: Proxy IngredientAPI
-ingredientAPI = Proxy
+data API ( auth :: [*] ) route = API
+  { root :: route :-          Get '[ PlainText ] Text
+  , subr :: route :- "sub" :> Get '[ PlainText ] Text
+  , ingr :: route :- "ing" :> Get '[ JSON ]      [ Ingredient ]
+  } deriving Generic
 
-ingredientServer :: Server IngredientAPI
-ingredientServer = pure [ Ingredient ( ID 1 ) "Ing1" ( Image "Ing1.jpg" ) "Some description" ( Cost 10000 ) Kg ]
+appApi :: Proxy ( ToServantApi ( API AuthMethods ) )
+appApi = Proxy
+
+appServer :: API auths AsAppM
+appServer = API
+  { root = pure "Root"
+  , subr = pure "Sub Route"
+  , ingr = selectAllIngredients'
+  }

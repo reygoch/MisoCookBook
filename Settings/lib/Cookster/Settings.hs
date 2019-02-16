@@ -28,7 +28,7 @@ instance FromJSON Settings
 
 data Server = Server
   { port :: Word     -- ^ port on which to listen for requests
-  , jwkf :: FilePath -- ^ JSON Web Token File
+  , jkey :: FilePath -- ^ JSON Web Token File
   } deriving ( Eq, Show, Generic )
 
 instance FromJSON Server

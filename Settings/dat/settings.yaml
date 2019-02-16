@@ -1,0 +1,17 @@
+server:
+  port      : 80
+  jkey      : key.json
+
+database:
+  port      : 5432
+  host      : localhost
+  name      : postgres
+  timeout   : 60
+  stripes   : 2
+  poolsize  : 5
+  username  : DevUsername
+  password  : DevPassword
+
+password:
+  cost      : 4
+  algorithm : $2b$

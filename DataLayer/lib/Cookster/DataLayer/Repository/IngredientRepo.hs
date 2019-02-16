@@ -11,8 +11,8 @@ import Squeal.PostgreSQL.Pool
 import Control.Monad.IO.Class      ( liftIO )
 import Control.Monad.Trans.Control ( MonadBaseControl )
 import Cookster.DataLayer.Query
-import Cookster.DataLayer.Schema   ( Schema )
 import Cookster.DataLayer.Model    ( Ingredient (..) )
+import Cookster.DataLayer.Schema   ( Schema )
 import Cookster.DataLayer.Database ( DBPool )
 --
 
