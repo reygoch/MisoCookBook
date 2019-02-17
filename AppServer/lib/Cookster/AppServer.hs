@@ -27,7 +27,7 @@ import Control.Monad.Trans.Except         ( ExceptT (..), runExceptT, withExcept
 import Crypto.JOSE.JWK                    ( JWK )
 
 import Cookster.Api                       ( appApi, appServer )
-import Cookster.App                       ( conAppM )
+import Cookster.App                       ( Context (..), conAppM )
 import Cookster.Settings                  ( Settings (..), Server (..), readSettings )
 import Cookster.DataLayer.Database        ( createPool, deletePool )
 import Cookster.DataLayer.Model.Password  ( makeHashingPolicy )
@@ -54,10 +54,12 @@ start = do
         hsp = makeHashingPolicy $ password settings
         prt = fromIntegral $ port $ server settings
 
+    let act = Context jss css
+
     pure $ bracket ( createPool $ database settings ) deletePool
          $ \ p -> run prt
          $ serveWithContext api ctx
-         $ hoistServerWithContext api pxy ( conAppM p )
+         $ hoistServerWithContext api pxy ( conAppM act p )
          $ genericServerT
          $ appServer
 

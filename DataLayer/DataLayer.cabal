@@ -30,4 +30,5 @@ library
                     , Cookster.DataLayer.Schema
                     , Cookster.DataLayer.Database
 
+                    , Cookster.DataLayer.Repository.UserRepo
                     , Cookster.DataLayer.Repository.IngredientRepo

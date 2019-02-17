@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds              #-}
 {-# LANGUAGE TypeFamilies           #-}
+{-# LANGUAGE TypeApplications       #-}
 {-# LANGUAGE DeriveGeneric          #-}
 {-# LANGUAGE DeriveAnyClass         #-}
 {-# LANGUAGE KindSignatures         #-}
@@ -16,6 +17,7 @@ import qualified GHC.Generics               as GHC ( Generic )
 import qualified Generics.SOP               as SOP ( Generic, HasDatatypeInfo, K )
 import           Generics.SOP.BasicFunctors        ( K (..) )
 import           Squeal.PostgreSQL                 ( PG, PGType ( PGtext ) )
+import           Squeal.PostgreSQL.Binary          ( FromValue (..), ToParam (..) )
 import qualified Cookster.Settings          as S   ( Password (..) )
 import           Crypto.BCrypt                     ( HashingPolicy (..), hashPasswordUsingPolicy )
 import qualified Crypto.BCrypt              as BC  ( validatePassword )
@@ -33,6 +35,12 @@ newtype Password ( h :: Hash ) = Password
     , ToJSON, FromJSON )
 
 type instance PG ( Password 'Hashed ) = PGtext
+
+instance FromValue PGtext ( Password 'Hashed ) where
+  fromValue = Password <$> fromValue @'PGtext
+
+instance ToParam ( Password 'Hashed ) PGtext where
+  toParam = toParam . unPassword
 
 --
 

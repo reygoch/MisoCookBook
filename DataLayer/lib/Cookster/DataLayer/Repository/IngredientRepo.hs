@@ -13,7 +13,7 @@ import Control.Monad.Trans.Control ( MonadBaseControl )
 import Cookster.DataLayer.Query
 import Cookster.DataLayer.Model    ( Ingredient (..) )
 import Cookster.DataLayer.Schema   ( Schema )
-import Cookster.DataLayer.Database ( DBPool )
+import Cookster.DataLayer.Database ( DBPool, DB, doDB' )
 --
 
 data IngredientRepo a where
@@ -22,10 +22,7 @@ data IngredientRepo a where
 selectAllIngredients' :: Member IngredientRepo f => Eff f [ Ingredient ]
 selectAllIngredients' = send SelectAllIngredients
 
-runIngredientRepo :: LastMember IO f => DBPool Schema -> Eff ( IngredientRepo ': f ) a -> Eff f a
-runIngredientRepo p = interpretM ( runner . go )
+runIngredientRepo :: Member DB f => Eff ( IngredientRepo ': f ) a -> Eff f a
+runIngredientRepo = interpret $ doDB' . go
   where go :: IngredientRepo x -> PoolPQ Schema IO x
         go SelectAllIngredients = runQuery selectAllIngredients >>= getRows
-
-        runner :: PoolPQ Schema IO x -> IO x
-        runner = liftIO . flip runPoolPQ p

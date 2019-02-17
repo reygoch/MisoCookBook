@@ -98,16 +98,6 @@ instance FromValue PGint4 ( ID a ) where
 
 --
 
-data Entity e = Entity
-  { entityId :: ID e
-  , entity   :: e
-  } deriving
-    ( Eq, Show
-    , GHC.Generic, SOP.Generic, SOP.HasDatatypeInfo
-    , ToJSON, FromJSON )
-
---
-
 data User = User
   { id       :: ID User
   , username :: Text
