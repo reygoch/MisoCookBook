@@ -26,6 +26,15 @@ constraints:
 
   , foreign-store         ^>= 0.2
 
+  , miso                  ^>= 0.21
+  , jsaddle               ^>= 0.9
+  , jsaddle-warp          ^>= 0.9
+  , ghcjs-base            ^>= 0.2
+  , ghcjs-base-stub       ^>= 0.2
+
+package FrontEnd
+  compiler : ghcjs
+
 source-repository-package
   type     : git
   location : https://github.com/reygoch/squeal.git

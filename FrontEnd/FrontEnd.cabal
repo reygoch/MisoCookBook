@@ -1,0 +1,25 @@
+cabal-version       : 2.4
+
+name                : frontend
+version             : 0.1.0.0
+
+common deps
+  if !impl(ghcjs)
+    buildable: False
+  build-depends     : base
+                    , miso
+                    , servant
+                    , jsaddle
+                    , jsaddle-warp
+  default-language  : Haskell2010
+
+library
+  import            : deps
+  hs-source-dirs    : lib
+  exposed-modules   : Cookster.FrontEnd
+
+executable FrontEnd
+  import            : deps
+  build-depends     : frontend
+  main-is           : Main.hs
+  hs-source-dirs    : app
